@@ -2,74 +2,73 @@
 This is an example. Another sentence goes here.
 the output should be
 example an is This. here goes sentence Another.*/
-#include<stdio.h>
+/*8. Write a program in C to word-wise reverse each sentence in a paragraph. The paragraph (string) is user input. For instance, for input string
+This is an example. Another sentence goes here.
+the output should be
+example an is This. here goes sentence Another.*/
+#include <stdio.h>
 #include <string.h>
-#include <stdlib.h>
 
-/*
-void reverse(char* begin, char* end)
+
+void reverse(char *a,int n)
 {
-    char temp;
-    while (begin < end) {
-        temp = *begin;
-        *begin = *end;
-        *end = temp;
-        *begin++;
-        *end--;
-    }
-}
-
-void reverseWords(char* s)
-{
-    char* temp;
-
-    char* low;
-
-    while(*temp)
+    int j=0;
+    for(int i=n-1; i>=0; i--)
     {
-        temp++;
-        if(*temp == '.')
+        if(a[i]==' ')
         {
-            reverse(low, temp-1);
-            low = temp + 2;
-        }
-        else if(*temp == ' ')
-        {
-            reverse(low, temp-1);
-            low = temp + 1;
-        }
-    }
+            for(int k=i+1; k<i+j+1; k++)
+                printf("%c",a[k]);
+            printf("%c",a[i]);
+            j=0;
 
-    reverse(s, temp-1);
+        }
+        else if(i==0)
+        {
+            for(int k=0; a[k]!=' '; k++)
+                printf("%c",a[k]);
+
+        }
+
+        else
+            j++;
+
+    }
 }
-*/
-void reverseWords(char *s)
+void reverse2(char *a,int n)
 {
-    int i;
-    char temp;
-
-    for(i = 0; s[i] != ' '; i++);
-
-    for(int j = 0; j < i; j++, i--)
+    int j=0,k=0;
+    for(int i=0; i<n; i++)
     {
-        char temp = s[i];
-        s[i] = s[j];
-        s[j] = temp;
-    }
+        if(a[i-1]=='.'&& a[i]==' ')
+            continue;
+        j++;
+        if(a[i]=='.')
+        {
+            reverse(a+k,j-1);
+            k+=j;
+            if(a[k]==' ')
+                printf("%c%c",a[i],a[k]);
+            else
+                printf("%c",a[i]);
 
-    printf("%s", s);
+            if(a[k]==' ')
+                k+=1;
+
+            j=0;
+        }
+    }
 }
+
 
 int main()
 {
-    char s[100];
-    gets(s);
+    char a[200];
+    gets(a);
+    int n=(int)strlen(a);
+    a[n]='\0';
 
-    char* temp = s;
-
-    reverseWords(s);
-    printf("%s", s);
-
-
+    reverse2(a,n);
     return 0;
 }
+
